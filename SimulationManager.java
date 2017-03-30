@@ -16,21 +16,19 @@ public class SimulationManager implements Runnable {
     private int numberQueues;
     private int minTimeBetweenClients;
     private int maxTimeBewtweenClients;
-    private int minServiceTime;
-    private int maxServiceTime;
-    private int ServiceTime;
+    private int simulationTime;
 
-    public SimulationManager(int minTimeBetweenClients,int maxTimeBewtweenClients,int minServiceTime,int maxServiceTime,int numberQueues)
+    public SimulationManager(int minTimeBetweenClients,int maxTimeBewtweenClients,int simultationTime,int numberQueues)
     {
 
         //this.generateTask(numarClienti);
         this.maxTimeBewtweenClients=maxTimeBewtweenClients;
         this.minTimeBetweenClients=minTimeBetweenClients;
-        this.minServiceTime=minServiceTime;
-        this.maxServiceTime=maxServiceTime;
+        //this.minServiceTime=minServiceTime;
+        //this.maxServiceTime=maxServiceTime;
         this.numberQueues=numberQueues;
-        Random rand = new Random();
-        this.ServiceTime = rand.nextInt((this.maxServiceTime - this.minServiceTime) + 1) + this.minServiceTime;
+        //Random rand = new Random();
+        this.simulationTime =simultationTime; //rand.nextInt((this.maxServiceTime - this.minServiceTime) + 1) + this.minServiceTime;
         sched=new Scheduler(this.numberQueues);
         threads=new ArrayList<Thread>();
         List<Server> servers=sched.getServers();
@@ -64,7 +62,7 @@ public class SimulationManager implements Runnable {
         long time=timeInit;
 
 
-        while(time<=timeInit+this.ServiceTime && !clients.isEmpty())
+        while(time<=timeInit+this.simulationTime-1000 && !clients.isEmpty())
         {
             try {
                 sched.addTask(clients.get(i),timeInit);
@@ -91,7 +89,7 @@ public class SimulationManager implements Runnable {
             }
         }
         try {
-            Thread.sleep(1000);
+            Thread.sleep(this.maxTimeBewtweenClients+500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -118,9 +116,9 @@ public class SimulationManager implements Runnable {
         //Calculator calculator =new Calculator();
         //Controller controller=new Controller(view, calculator);
         //Client ionel=new Client(1,200);
-        int minServiceTime=1000;
-        int maxServiceTime=3000;
-        SimulationManager simulationManager =new SimulationManager(1,200,minServiceTime,maxServiceTime,3);
+        //int minServiceTime=1000;
+        //int maxServiceTime=3000;
+        SimulationManager simulationManager =new SimulationManager(1,200,3000,3);
         Thread t=new Thread(simulationManager);
         t.start();
         //t.kill();
