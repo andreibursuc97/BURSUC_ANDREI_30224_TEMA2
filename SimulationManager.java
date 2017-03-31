@@ -1,20 +1,20 @@
 import javax.swing.*;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+
+//import java.time.LocalTime;
 
 /**
  * Created by Andrei on 25/03/2017.
+ * Gestionare cozi.
  */
 public class SimulationManager implements Runnable {
 
    // private List<Client> clients;
     private List<Thread> threads;
-    private Scheduler sched;
-    private int numberQueues;
+    //private Scheduler sched;
+    //private int numberQueues;
     private int minTimeBetweenClients;
     private int maxTimeBewtweenClients;
     private int simulationTime;
@@ -30,7 +30,7 @@ public class SimulationManager implements Runnable {
         this.minTimeBetweenClients=minTimeBetweenClients;
         this.minServiceTime=minServiceTime;
         this.maxServiceTime=maxServiceTime;
-        this.numberQueues=numberQueues;
+        //this.numberQueues=numberQueues;
         //Random rand = new Random();
         this.simulationTime =simultationTime; //rand.nextInt((this.maxServiceTime - this.minServiceTime) + 1) + this.minServiceTime;
         //sched=new Scheduler(this.numberQueues);
@@ -61,7 +61,7 @@ public class SimulationManager implements Runnable {
         return this.clients;
     }*/
 
-    public synchronized  void addTask(Client client,long timeInit)
+    private synchronized  void addTask(Client client,long timeInit)
     {
 
         int min = Integer.MAX_VALUE;
