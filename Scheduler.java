@@ -42,7 +42,11 @@ public class Scheduler {
 
             for (Server server : servers) {
                 if (server.getWaitingPeriod() == min ) {
-                    server.addClient(client,timeInit);
+                    {
+                        server.addClient(client,timeInit);
+                        break;
+                    }
+
 
                     /// /ok = 1;
                     //waitingClients=clients;
