@@ -10,12 +10,23 @@ public class Client {
     private long finishTime;
     private int processingTime;
 
+    private long waitingTime;
+
     public Client(int ID,int numarProduse)
     {
         //this.arrivalTime=arrivalTime;
         this.ID=ID;
         //this.numarProduse=numarProduse;
         this.processingTime=numarProduse;
+        this.waitingTime=0;
+    }
+
+    public long getWaitingTime() {
+        return waitingTime;
+    }
+
+    public void setWaitingTime(long waitingTime) {
+        this.waitingTime = waitingTime;
     }
 
 

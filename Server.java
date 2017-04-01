@@ -15,20 +15,22 @@ public class Server implements Runnable {
 
     private BlockingQueue<Client> clients;
     //AtomicInteger time;
-    private AtomicInteger ok;
+    //private AtomicInteger ok;
     private AtomicInteger waitingPeriod;
     private int ID;
     private long timeInit;
+    private IEL listener;
     //private boolean full;
     //private List<Client> waitingClients;
     //private ArrayList<Client> clientiCoada=new ArrayList<Client>();
 
-    public Server(int ID)
+    public Server(int ID, IEL listener)
     {
         //waitingClients=new ArrayList<Client>();
         //waitingClients.add(new Client(1,1));
         this.ID=ID;
-        ok=new AtomicInteger(2);
+        this.listener=listener;
+        //ok=new AtomicInteger(2);
         waitingPeriod=new AtomicInteger(0);
        // time=new AtomicInteger(0);
         clients=new ArrayBlockingQueue<Client>(20000);
@@ -37,19 +39,20 @@ public class Server implements Runnable {
     public synchronized void addClient(Client client,long timeInit)
     {
         try {
-            this.timeInit=timeInit;
-            if(client.getArrivalTime()==0)
+            this.timeInit = timeInit;
+            if (client.getArrivalTime() == 0)
             //this.waitingClients=waitingClients;
             {
                 //time.incrementAndGet();
-            clients.put(client);
-            client.setArrivalTime(System.currentTimeMillis()-timeInit);
-            System.out.println("Clientul "+client.getID()+" s-a asezat la coada la casa "+this.ID+" la "+ client.getArrivalTime()+"!");
+                clients.put(client);
+                client.setArrivalTime(System.currentTimeMillis() - timeInit);
+                System.out.println("Clientul " + client.getID() + " s-a asezat la coada la casa " + this.ID + " la " + client.getArrivalTime() + "!");
                 //Thread.sleep(1);
                 waitingPeriod.addAndGet(client.getProcessingTime());
-            //waitingPeriod=waitingPeriod+;
-            ok.set(1);}
-            //waitingPeriod.addAndGet(client.getNumarProduse());
+                //waitingPeriod=waitingPeriod+;
+                //ok.set(1);}
+                //waitingPeriod.addAndGet(client.getNumarProduse());
+            }
         }
         catch(InterruptedException e)
         {}
@@ -62,6 +65,11 @@ public class Server implements Runnable {
     public int getSize()
     {
         return clients.size();
+    }
+
+    public int getID()
+    {
+        return this.ID;
     }
     /*public void setFull(boolean val)
     {
@@ -80,9 +88,9 @@ public class Server implements Runnable {
             {
             try {//System.out.println("Thread "+this.ID+ " merge la "+System.currentTimeMillis());
                 //if (ok.get() == 1) {
-                    System.out.println("La casa " + this.ID + " sunt " + clients.size() + " clienti!");
+                    //System.out.println("La casa " + this.ID + " sunt " + clients.size() + " clienti!");
                     Client client = clients.take();
-
+                    this.listener.newClient(this,client);
                     //int time= (int) (System.currentTimeMillis()%10000);
                     //System.out.println("Clientul "+client.getID()+" a ajuns la casa la "+ time);
                     Thread.sleep(client.getProcessingTime());
@@ -93,7 +101,9 @@ public class Server implements Runnable {
                     //time.addAndGet(client.getProcessingTime());
                     client.setFinishTime(System.currentTimeMillis()-timeInit);
                     //if(client.getFinishTime()> client.getArrivalTime())
-                    System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + (client.getFinishTime() - client.getArrivalTime()));
+                    client.setWaitingTime(client.getFinishTime() - client.getArrivalTime());
+                    System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + client.getWaitingTime());
+                    listener.notifyWaitingTime(this, (int) client.getWaitingTime());
                     //else
                         //System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + -(client.getFinishTime() - client.getArrivalTime()));
                 //}
@@ -102,7 +112,7 @@ public class Server implements Runnable {
                 System.out.println("EROARE");
                 break;
             }
-            if(ok.get()==1 || ok.get()==0) System.out.println("Perioada de asteptare la casa "+this.ID+" este "+waitingPeriod.get());
+           // if(ok.get()==1 || ok.get()==0) System.out.println("Perioada de asteptare la casa "+this.ID+" este "+waitingPeriod.get());
 
         }
     }
