@@ -1,4 +1,4 @@
-import java.time.LocalTime;
+//import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class SimulationManager {
             thread.start();
         }
 
-        ClientGenerator gen=new ClientGenerator(minTimeBetweenClients,maxTimeBetweenClients,simultationTime,numberQueues,minServiceTime,maxServiceTime,this.servers,this.threads,listener);
+        ClientGenerator gen=new ClientGenerator(minTimeBetweenClients,maxTimeBetweenClients,simultationTime,numberQueues,minServiceTime,maxServiceTime,this.servers,this.threads,listener,log);
         Thread t=new Thread(gen);
         t.start();
 

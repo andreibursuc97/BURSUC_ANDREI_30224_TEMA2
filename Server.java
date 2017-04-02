@@ -51,7 +51,12 @@ public class Server implements Runnable {
                 clients.put(client);
                 listener.incrementRealTimeClientCounter(this);
                 client.setArrivalTime(System.currentTimeMillis() - timeInit);
-                System.out.println("Clientul " + client.getID() + " s-a asezat la coada la casa " + this.ID + " la " + client.getArrivalTime() + "!");
+                //log.appendToString("");
+                log.appendToString("Clientul " + client.getID() + " s-a asezat la coada la casa " + this.ID + " la " + client.getArrivalTime() + "!");
+                int waiting=client.getProcessingTime()+this.getWaitingPeriod();
+                log.appendToString("Clientul "+client.getID()+" are de asteptat "+waiting+"!");
+                //log.appendToString("");
+                //System.out.println("Clientul " + client.getID() + " s-a asezat la coada la casa " + this.ID + " la " + client.getArrivalTime() + "!");
 
                 //Thread.sleep(1);
                 waitingPeriod.addAndGet(client.getProcessingTime());
@@ -126,7 +131,9 @@ public class Server implements Runnable {
                     client.setFinishTime(System.currentTimeMillis()-timeInit);
                     //if(client.getFinishTime()> client.getArrivalTime())
                     client.setWaitingTime(client.getFinishTime() - client.getArrivalTime());
-                    System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + client.getWaitingTime());
+                    log.appendToString("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime()+" ms!" );
+                    log.appendToString("Clientul "+client.getID()+ " a asteptat " + client.getWaitingTime()+" ms la casa "+this.ID+"!");
+                    //System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + client.getWaitingTime());
                     listener.notifyWaitingTime(this, (int) client.getWaitingTime());
                     listener.decrementRealTimeClientCounter(this);
                     //else
@@ -134,7 +141,8 @@ public class Server implements Runnable {
                 //}
 
             } catch (InterruptedException e) {
-                System.out.println("Casa "+this.ID+" s-a inchis!");
+                log.appendToString("Casa "+this.ID+" s-a inchis!");
+                //System.out.println("Casa "+this.ID+" s-a inchis!");
                 if(timeInitEmpty>0 && timeFinalEmpty==0)
                 {
                     timeFinalEmpty=System.currentTimeMillis();

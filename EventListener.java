@@ -31,8 +31,8 @@ public class EventListener implements IEL,Runnable {
     }
 
 
-    public Map<Server, Integer> getNumberOfClients() {
-        return numberOfClients;
+    public Map<Server, Integer> getRealTimeClientCounter() {
+        return realTimeClientCounter;
     }
 
     public void newClient(Server server,Client client)
@@ -148,49 +148,57 @@ public class EventListener implements IEL,Runnable {
         }
     }
 
-    public void averageWaitingTimeDisplayer()
+    public void averageWaitingTimeDisplayer(Logger log)
     {
-        if(numberOfClients.isEmpty()) {
-            System.out.println("Lista goala");
-        }
-        checkMap();
-        for(Map.Entry<Server,Integer> entry:numberOfClients.entrySet())
-        {
-            float time=totalWaitingTime.get(entry.getKey());
-            System.out.println(time+" "+entry.getValue());
-            float average=time/entry.getValue();
-            System.out.println("Timpul mediu de asteptare la casa "+entry.getKey().getID()+" a fost "+average);
-        }
+        if(!numberOfClients.isEmpty()) {
 
-    }
-
-    public void peakHourDisplayer()
-    {
-        for(Map.Entry<Server,Map<Integer,Integer>> entry:peakHour.entrySet()) {
-
-            Map<Integer,Integer> values= entry.getValue();
-            int max=0,max2=0;
-            if(!values.isEmpty()) {
-                for (Map.Entry<Integer,Integer> entry2:values.entrySet()) {
-                    //ySystem.out.println(entry2.getKey()+" "+entry2.getValue());
-                    max=entry2.getValue();
-                    max2=entry2.getKey();
-
-                }
+            checkMap();
+            log.appendToString("\n");
+            for (Map.Entry<Server, Integer> entry : numberOfClients.entrySet()) {
+                float time = totalWaitingTime.get(entry.getKey());
+                //System.out.println(time+" "+entry.getValue());
+                float average = time / entry.getValue();
+                log.appendToString("Timpul mediu de asteptare la casa " + entry.getKey().getID() + " a fost " + average);
+                //System.out.println("Timpul mediu de asteptare la casa " + entry.getKey().getID() + " a fost " + average);
             }
-            //while(max%100!=0) max--;
-            max=max-max%100;
-            System.out.println(" La ora de varf "+max+" ms pentru casa "+entry.getKey().getID()+" au fost "+max2+" clienti!");
-            //System.out.println("Ora de varf la casa "+entry.getKey()+" a fost la "+max+" ms!");
+        }
+
+    }
+
+    public void peakHourDisplayer(Logger log)
+    {
+        if(!peakHour.isEmpty()) {
+            log.appendToString("\n");
+            for (Map.Entry<Server, Map<Integer, Integer>> entry : peakHour.entrySet()) {
+
+                Map<Integer, Integer> values = entry.getValue();
+                int max = 0, max2 = 0;
+                if (!values.isEmpty()) {
+                    for (Map.Entry<Integer, Integer> entry2 : values.entrySet()) {
+                        //ySystem.out.println(entry2.getKey()+" "+entry2.getValue());
+                        max = entry2.getValue();
+                        max2 = entry2.getKey();
+
+                    }
+                }
+                //while(max%100!=0) max--;
+                max = max - max % 100;
+                log.appendToString(" La ora de varf " + max + " ms pentru casa " + entry.getKey().getID() + " au fost " + max2 + " clienti!");
+                //System.out.println(" La ora de varf " + max + " ms pentru casa " + entry.getKey().getID() + " au fost " + max2 + " clienti!");
+                //System.out.println("Ora de varf la casa "+entry.getKey()+" a fost la "+max+" ms!");
+            }
         }
     }
 
-    public void emptyQueueTimeDisplayer()
+    public void emptyQueueTimeDisplayer(Logger log)
     {
         //checkMap();
-        for(Map.Entry<Server,Integer> entry:emptyQueueTime.entrySet())
-        {
-            System.out.println("Casa "+entry.getKey().getID()+" a fost goala timp de "+entry.getValue());
+        if(!emptyQueueTime.isEmpty()) {
+            log.appendToString("\n");
+            for (Map.Entry<Server, Integer> entry : emptyQueueTime.entrySet()) {
+                log.appendToString("Casa " + entry.getKey().getID() + " a fost goala timp de " + entry.getValue());
+                //System.out.println("Casa " + entry.getKey().getID() + " a fost goala timp de " + entry.getValue());
+            }
         }
     }
 
@@ -208,10 +216,11 @@ public class EventListener implements IEL,Runnable {
             try{
 
                 time=System.currentTimeMillis();
+                //if((time-timeInit)<=)
                 Thread.sleep(0);
                 if((time-timeInit)%100==0)
                     this.notifyPeakHour((int)(time-timeInit));
-                view.setProgressBars(realTimeClientCounter);
+                //view.setProgressBars(realTimeClientCounter);
             }
             catch (InterruptedException e)
             {

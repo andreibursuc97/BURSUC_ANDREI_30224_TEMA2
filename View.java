@@ -16,6 +16,9 @@ import java.util.Map;
  * @author unknown
  */
 public class View extends JFrame {
+
+    private ArrayList<JProgressBar> progressBars;
+
     public View() {
         initComponents();
         startButton.addActionListener(new StartButtonListener());
@@ -47,9 +50,14 @@ public class View extends JFrame {
         //this.setVisible(true);
     }
 
-    public void setLogger(String s)
+    public synchronized void setLogger(String s)
     {
         loggerTextArea.setText(s);
+    }
+
+    public synchronized void setContorField(int n)
+    {
+        contorField.setText(Integer.toString(n));
     }
 
     private void initComponents() {
@@ -69,6 +77,8 @@ public class View extends JFrame {
         simulationTimeField = new JTextField();
         startButton = new JButton();
         label8 = new JLabel();
+        contorLabel = new JLabel();
+        contorField = new JTextField();
         casa1 = new JLabel();
         casaProgressBar1 = new JProgressBar();
         casa2 = new JLabel();
@@ -111,6 +121,7 @@ public class View extends JFrame {
             "[]" +
             "[]" +
             "[]" +
+            "[]" +
             "[]"));
 
         //---- minTimeBeetween ----
@@ -119,7 +130,7 @@ public class View extends JFrame {
 
         //---- minTimeBeetweenField ----
         minTimeBeetweenField.setText("Scrie aici...");
-        contentPane.add(minTimeBeetweenField, "cell 5 0");
+        contentPane.add(minTimeBeetweenField, "cell 5 0,width 50:100");
 
         //---- minServiceTime ----
         minServiceTime.setText("Minimum Service Time");
@@ -127,7 +138,7 @@ public class View extends JFrame {
 
         //---- minServiceTimeField ----
         minServiceTimeField.setText("Scrie aici...");
-        contentPane.add(minServiceTimeField, "cell 8 0");
+        contentPane.add(minServiceTimeField, "cell 8 0,width 50:100");
 
         //---- maxTimeBetween ----
         maxTimeBetween.setText("Maximum Time Between clients");
@@ -169,40 +180,48 @@ public class View extends JFrame {
         label8.setText("Situatia la case");
         contentPane.add(label8, "cell 3 4");
 
+        //---- contorLabel ----
+        contorLabel.setText("Conometru:");
+        contentPane.add(contorLabel, "cell 3 5");
+
+        //---- contorField ----
+        contorField.setText("Contor");
+        contentPane.add(contorField, "cell 3 5,alignx left,grow 0 100,width 50:100");
+
         //---- casa1 ----
         casa1.setText("Casa 1");
-        contentPane.add(casa1, "cell 3 5,gapy 10");
-        contentPane.add(casaProgressBar1, "cell 3 5,gapy 10");
+        contentPane.add(casa1, "cell 3 6,gapy 10");
+        contentPane.add(casaProgressBar1, "cell 3 6,gapy 10");
 
         //---- casa2 ----
         casa2.setText("Casa 2");
-        contentPane.add(casa2, "cell 3 6");
-        contentPane.add(casaProgressBar2, "cell 3 6");
+        contentPane.add(casa2, "cell 3 7");
+        contentPane.add(casaProgressBar2, "cell 3 7");
 
         //---- casa3 ----
         casa3.setText("Casa 3");
-        contentPane.add(casa3, "cell 3 7");
-        contentPane.add(casaProgressBar3, "cell 3 7");
+        contentPane.add(casa3, "cell 3 8");
+        contentPane.add(casaProgressBar3, "cell 3 8");
 
         //---- casa4 ----
         casa4.setText("Casa 4");
-        contentPane.add(casa4, "cell 3 8");
-        contentPane.add(casaProgressBar4, "cell 3 8");
+        contentPane.add(casa4, "cell 3 9");
+        contentPane.add(casaProgressBar4, "cell 3 9");
 
         //---- casa5 ----
         casa5.setText("Casa 5");
-        contentPane.add(casa5, "cell 3 9");
-        contentPane.add(casaProgressBar5, "cell 3 9");
+        contentPane.add(casa5, "cell 3 10");
+        contentPane.add(casaProgressBar5, "cell 3 10");
 
         //---- loggerLabel ----
         loggerLabel.setText("Logger");
-        contentPane.add(loggerLabel, "cell 3 10,gapy 30");
+        contentPane.add(loggerLabel, "cell 3 11,gapy 30");
 
         //======== scrollPane1 ========
         {
             scrollPane1.setViewportView(loggerTextArea);
         }
-        contentPane.add(scrollPane1, "cell 3 11 5 1,height 100:159:300");
+        contentPane.add(scrollPane1, "cell 3 12 5 1,width 100:370:500,height 100:159:300");
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -224,6 +243,8 @@ public class View extends JFrame {
     private JTextField simulationTimeField;
     private JButton startButton;
     private JLabel label8;
+    private JLabel contorLabel;
+    private JTextField contorField;
     private JLabel casa1;
     private JProgressBar casaProgressBar1;
     private JLabel casa2;
@@ -237,7 +258,6 @@ public class View extends JFrame {
     private JLabel loggerLabel;
     private JScrollPane scrollPane1;
     private JTextArea loggerTextArea;
-    ArrayList<JProgressBar> progressBars;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
 
@@ -253,6 +273,8 @@ public class View extends JFrame {
                 int numberQueues=new Integer(numberQueuesField.getText());
                 if(numberQueues<3 || numberQueues>5) throw new NumberFormatException("Numarul de cozi trebuie sa fie intre 3 si 5!");
                 int simulationTime=new Integer(simulationTimeField.getText());
+                if(simulationTime<=maxServiceTime || simulationTime<=maxTimeBetweenClients)
+                    throw new NumberFormatException("Timpul de simulare dat este prea mic");
                 //IEL listener=new EventListener();
                 SimulationManager manager=new SimulationManager(minTimeBetweenClients,maxTimeBetweenClients,simulationTime,numberQueues,minServiceTime,maxServiceTime,View.this);
 

@@ -22,8 +22,9 @@ public class ClientGenerator implements Runnable {
     private List<Server> servers;
     private List<Thread> threads;
     IEL listener;
+    Logger log;
 
-    public ClientGenerator(int minTimeBetweenClients, int maxTimeBewtweenClients, int simultationTime, int numberQueues, int minServiceTime, int maxServiceTime,List<Server> servers,List<Thread> threads,IEL listener)
+    public ClientGenerator(int minTimeBetweenClients, int maxTimeBewtweenClients, int simultationTime, int numberQueues, int minServiceTime, int maxServiceTime,List<Server> servers,List<Thread> threads,IEL listener,Logger log)
     {
 
         //this.generateTask(numarClienti);
@@ -38,6 +39,7 @@ public class ClientGenerator implements Runnable {
         this.servers=servers;
         this.threads=threads;
         this.listener=listener;
+        this.log=log;
         //this.generateTask(3000);
     }
 
@@ -80,10 +82,14 @@ public class ClientGenerator implements Runnable {
         long timeInit=System.currentTimeMillis();
         //System.out.println(timeInit);
         long time=timeInit;
+        log.setTimeInit(timeInit);
+        log.setSimulationTime(simulationTime);
         EventListener listen=(EventListener)listener;
         listen.setTimeInit(time);
         Thread t=new Thread(listen);
         t.start();
+        Thread logThread=new Thread(log);
+        logThread.start();
         //listen.startPeakHour(servers);
 
         while(time<timeInit+this.simulationTime)
@@ -102,7 +108,7 @@ public class ClientGenerator implements Runnable {
                 //i++;
                // Random rand = new Random();
                 int interval = rand.nextInt((this.maxTimeBewtweenClients - this.minTimeBetweenClients + 1)) + this.minTimeBetweenClients;
-                System.out.println(interval+" ");
+                //System.out.println(interval+" ");
                 Thread.sleep(interval);
                 time = System.currentTimeMillis();
                 //listen.notifyPeakHour((int)(time-timeInit));
@@ -132,12 +138,15 @@ public class ClientGenerator implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
+        t.interrupt();
         for(Thread thread:this.threads)
             thread.interrupt();
-        t.interrupt();
-        listen.averageWaitingTimeDisplayer();
-        listen.emptyQueueTimeDisplayer();
-        listen.peakHourDisplayer();
+
+        //listen.averageWaitingTimeDisplayer(log);
+        //listen.emptyQueueTimeDisplayer(log);
+        //listen.peakHourDisplayer(log);
+        log.setFlag(1);
+
     }
 
    /* private void generateTask(int numarClienti)
