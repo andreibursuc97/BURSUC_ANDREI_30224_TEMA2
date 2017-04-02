@@ -6,5 +6,8 @@ public interface IEL {
     public void newClient(Server server,Client client);
     public void notifyWaitingTime(Server server,int waitingTime);
     public void averageWaitingTimeDisplayer();
+    public void notifyEmptyQueue(Server server,int emptyTime);
+    public void decrementRealTimeClientCounter(Server server);
+    public void incrementRealTimeClientCounter(Server server);
 
 }

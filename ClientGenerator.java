@@ -80,30 +80,45 @@ public class ClientGenerator implements Runnable {
         long timeInit=System.currentTimeMillis();
         //System.out.println(timeInit);
         long time=timeInit;
-
+        EventListener listen=(EventListener)listener;
+        listen.setTimeInit(time);
+        Thread t=new Thread(listen);
+        t.start();
+        //listen.startPeakHour(servers);
 
         while(time<timeInit+this.simulationTime)
         {
             try {
                 Random rand=new Random();
-                int numarProduse=rand.nextInt((this.maxServiceTime-this.minServiceTime+1)+this.minServiceTime);
+                int numarProduse=rand.nextInt((this.maxServiceTime-this.minServiceTime+1))+this.minServiceTime;
+                //System.out.println(numarProduse+" ");
                 Client client=new Client(i,numarProduse);
                 i++;
                 this.addTask(client,timeInit);
+                //listen.notifyPeakHour((int) (time-timeInit));
+
                 // int time=(int)System.currentTimeMillis()%100000;
                 //clients.remove(i);
                 //i++;
                // Random rand = new Random();
-                int interval = rand.nextInt((this.maxTimeBewtweenClients - this.minTimeBetweenClients) + 1) + this.minTimeBetweenClients;
+                int interval = rand.nextInt((this.maxTimeBewtweenClients - this.minTimeBetweenClients + 1)) + this.minTimeBetweenClients;
+                System.out.println(interval+" ");
                 Thread.sleep(interval);
                 time = System.currentTimeMillis();
-                System.out.println(time);
+                //listen.notifyPeakHour((int)(time-timeInit));
+                //System.out.println(time);
             }
             catch(InterruptedException e)
             {
                 JOptionPane.showMessageDialog(null,e.getMessage());
             }
         }
+
+        /*try {
+            Thread.sleep(this.simulationTime/2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
         /*List<Server> servers=sched.getServers();
         synchronized (servers) {
             for (Server server : servers) {
@@ -119,7 +134,10 @@ public class ClientGenerator implements Runnable {
         }*/
         for(Thread thread:this.threads)
             thread.interrupt();
-        listener.averageWaitingTimeDisplayer();
+        t.interrupt();
+        listen.averageWaitingTimeDisplayer();
+        listen.emptyQueueTimeDisplayer();
+        listen.peakHourDisplayer();
     }
 
    /* private void generateTask(int numarClienti)

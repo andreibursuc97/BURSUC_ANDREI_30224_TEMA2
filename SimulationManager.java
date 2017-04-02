@@ -1,3 +1,4 @@
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +11,11 @@ public class SimulationManager {
     //private Scheduler sched;
     //private int numberQueues;
     private int minTimeBetweenClients;
-    private int maxTimeBewtweenClients;
+    private int maxTimeBetweenClients;
     private int simulationTime;
     private int minServiceTime;
     private int maxServiceTime;
+    private IEL listener;
 
     public List<Server> getServers() {
         return servers;
@@ -21,11 +23,11 @@ public class SimulationManager {
 
     private List<Server> servers;
 
-    public SimulationManager(int minTimeBetweenClients, int maxTimeBewtweenClients, int simultationTime, int numberQueues, int minServiceTime, int maxServiceTime,IEL listener)
+    public SimulationManager(int minTimeBetweenClients, int maxTimeBetweenClients, int simultationTime, int numberQueues, int minServiceTime, int maxServiceTime,View view)
     {
 
         //this.generateTask(numarClienti);
-        this.maxTimeBewtweenClients=maxTimeBewtweenClients;
+        this.maxTimeBetweenClients=maxTimeBetweenClients;
         this.minTimeBetweenClients=minTimeBetweenClients;
         this.minServiceTime=minServiceTime;
         this.maxServiceTime=maxServiceTime;
@@ -35,11 +37,23 @@ public class SimulationManager {
         //sched=new Scheduler(this.numberQueues);
         threads=new ArrayList<Thread>();
         servers=new ArrayList<Server>();
+
         for(int i=0;i<numberQueues;i++)
         {
             //Server server=new Server();
-            servers.add(new Server(i,listener));
+            servers.add(new Server(i));
         }
+
+        listener=new EventListener(servers,view);
+        Logger log=new Logger(listener,view);
+
+        for(int i=0;i<numberQueues;i++)
+        {
+            //Server server=new Server();
+            servers.get(i).setListener(listener);
+            servers.get(i).setLog(log);
+        }
+
         for(Server server:servers)
         {
             Thread thread=new Thread(server);
@@ -47,7 +61,7 @@ public class SimulationManager {
             thread.start();
         }
 
-        ClientGenerator gen=new ClientGenerator(minTimeBetweenClients,maxTimeBewtweenClients,simultationTime,numberQueues,minServiceTime,maxServiceTime,this.servers,this.threads,listener);
+        ClientGenerator gen=new ClientGenerator(minTimeBetweenClients,maxTimeBetweenClients,simultationTime,numberQueues,minServiceTime,maxServiceTime,this.servers,this.threads,listener);
         Thread t=new Thread(gen);
         t.start();
 
@@ -55,26 +69,6 @@ public class SimulationManager {
     }
 
 
-    public static void main(String[] args) {
-        // write your code here
 
-        // View view=new View();
-        //Calculator calculator =new Calculator();
-        //Controller controller=new Controller(view, calculator);
-        //Client ionel=new Client(1,200);
-        //int minServiceTime=1000;
-        //int maxServiceTime=3000;
-        IEL listener=new EventListener();
-        SimulationManager simulationManager =new SimulationManager(100,200,1000,3,200,500,listener);
-
-        //Thread t=new Thread(clientGenerator);
-        //t.start();
-        //t.kill();
-        //t.stop();
-        //clientGenerator.addClient(ionel);
-        // Thread rand1=new Thread(clientGenerator);
-        //rand1.start();
-
-
-    }
 }
+

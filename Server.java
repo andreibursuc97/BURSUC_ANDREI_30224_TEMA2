@@ -19,19 +19,23 @@ public class Server implements Runnable {
     private AtomicInteger waitingPeriod;
     private int ID;
     private long timeInit;
+    private Logger log;
+
+
     private IEL listener;
     //private boolean full;
     //private List<Client> waitingClients;
     //private ArrayList<Client> clientiCoada=new ArrayList<Client>();
 
-    public Server(int ID, IEL listener)
+    public Server(int ID)
     {
         //waitingClients=new ArrayList<Client>();
         //waitingClients.add(new Client(1,1));
         this.ID=ID;
-        this.listener=listener;
+        //this.listener=listener;
         //ok=new AtomicInteger(2);
         waitingPeriod=new AtomicInteger(0);
+        //this.log=log;
        // time=new AtomicInteger(0);
         clients=new ArrayBlockingQueue<Client>(20000);
     }
@@ -45,8 +49,10 @@ public class Server implements Runnable {
             {
                 //time.incrementAndGet();
                 clients.put(client);
+                listener.incrementRealTimeClientCounter(this);
                 client.setArrivalTime(System.currentTimeMillis() - timeInit);
                 System.out.println("Clientul " + client.getID() + " s-a asezat la coada la casa " + this.ID + " la " + client.getArrivalTime() + "!");
+
                 //Thread.sleep(1);
                 waitingPeriod.addAndGet(client.getProcessingTime());
                 //waitingPeriod=waitingPeriod+;
@@ -71,6 +77,15 @@ public class Server implements Runnable {
     {
         return this.ID;
     }
+
+    public void setListener(IEL listener) {
+        this.listener = listener;
+    }
+
+
+    public void setLog(Logger log) {
+        this.log = log;
+    }
     /*public void setFull(boolean val)
     {
         this.full=val;
@@ -84,13 +99,22 @@ public class Server implements Runnable {
 
     public void run() {
         //while (ok.get() != 0) {
+        //EventListener listen=(EventListener) listener;
             while(true)
             {
+                long timeInitEmpty=0;
+                long timeFinalEmpty=0;
             try {//System.out.println("Thread "+this.ID+ " merge la "+System.currentTimeMillis());
                 //if (ok.get() == 1) {
                     //System.out.println("La casa " + this.ID + " sunt " + clients.size() + " clienti!");
+                    //listen.notifyPeakHour((int)System.currentTimeMillis());
+                    timeInitEmpty=System.currentTimeMillis();
                     Client client = clients.take();
+                    timeFinalEmpty=System.currentTimeMillis();
+                    if(timeFinalEmpty-timeInitEmpty>0)
+                        listener.notifyEmptyQueue(this,(int)(timeFinalEmpty-timeInitEmpty));
                     this.listener.newClient(this,client);
+
                     //int time= (int) (System.currentTimeMillis()%10000);
                     //System.out.println("Clientul "+client.getID()+" a ajuns la casa la "+ time);
                     Thread.sleep(client.getProcessingTime());
@@ -104,12 +128,19 @@ public class Server implements Runnable {
                     client.setWaitingTime(client.getFinishTime() - client.getArrivalTime());
                     System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + client.getWaitingTime());
                     listener.notifyWaitingTime(this, (int) client.getWaitingTime());
+                    listener.decrementRealTimeClientCounter(this);
                     //else
                         //System.out.println("Clientul " + client.getID() + " a iesit de la casa " + this.ID + " la " + client.getFinishTime() + "!" + " si a asteptat " + -(client.getFinishTime() - client.getArrivalTime()));
                 //}
 
             } catch (InterruptedException e) {
-                System.out.println("EROARE");
+                System.out.println("Casa "+this.ID+" s-a inchis!");
+                if(timeInitEmpty>0 && timeFinalEmpty==0)
+                {
+                    timeFinalEmpty=System.currentTimeMillis();
+                    listener.notifyEmptyQueue(this,(int)(timeFinalEmpty-timeInitEmpty));
+                }
+
                 break;
             }
            // if(ok.get()==1 || ok.get()==0) System.out.println("Perioada de asteptare la casa "+this.ID+" este "+waitingPeriod.get());
