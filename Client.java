@@ -3,20 +3,14 @@
  */
 public class Client {
     private int ID;
-
-    //private int numarProduse;
     private long arrivalTime;
-
     private long finishTime;
     private int processingTime;
-
     private long waitingTime;
 
     public Client(int ID,int numarProduse)
     {
-        //this.arrivalTime=arrivalTime;
         this.ID=ID;
-        //this.numarProduse=numarProduse;
         this.processingTime=numarProduse;
         this.waitingTime=0;
     }

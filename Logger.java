@@ -42,22 +42,15 @@ public class Logger implements Runnable {
 
     public void run() {
         long time=0;
-        long hourTime=0;
         EventListener listen=(EventListener) listener;
-        //this.startPeakHour(servers);
         int size=0;
         while(true)
         {
-            try{
-
-                //time=System.currentTimeMillis();
-                Thread.sleep(0);
                 time=System.currentTimeMillis();
                 if((time-timeInit)<=simulationTime)
                     view.setContorField((int)(time-timeInit));
                 if(text.toString().length()>size)
                     view.setLogger(text.toString());
-
                 size=text.toString().length();
                 view.setProgressBars(listen.getRealTimeClientCounter());
                 if(flag==1)
@@ -68,14 +61,6 @@ public class Logger implements Runnable {
                 }
                 else if(flag==2)
                     break;
-            }
-            catch (InterruptedException e)
-            {
-                break;
-            }
         }
-        //listen.averageWaitingTimeDisplayer(this);
-        //listen.emptyQueueTimeDisplayer(this);
-        //listen.peakHourDisplayer(this);
     }
 }

@@ -14,13 +14,12 @@ public class EventListener implements IEL,Runnable {
     private Map<Server,Map<Integer,Integer>> peakHour;
     private List<Server> servers;
     private long timeInit;
-    private View view;
 
 
 
-    public EventListener(List<Server> servers, View view)
+
+    public EventListener(List<Server> servers)
     {
-        this.view=view;
         numberOfClients=new ConcurrentHashMap<Server, Integer>();
         totalWaitingTime=new ConcurrentHashMap<Server, Integer>();
         clientsInServer=new ConcurrentHashMap<Client,Server>();
@@ -117,7 +116,6 @@ public class EventListener implements IEL,Runnable {
     {
         for(Map.Entry<Server,Map<Integer,Integer>> entry:peakHour.entrySet()) {
 
-            //System.out.println(realTimeClientCounter.get(entry.getKey()));
             if(realTimeClientCounter.get(entry.getKey())!=null)
                 entry.getValue().put(realTimeClientCounter.get(entry.getKey()),time);
         }
@@ -156,10 +154,8 @@ public class EventListener implements IEL,Runnable {
             log.appendToString("\n");
             for (Map.Entry<Server, Integer> entry : numberOfClients.entrySet()) {
                 float time = totalWaitingTime.get(entry.getKey());
-                //System.out.println(time+" "+entry.getValue());
                 float average = time / entry.getValue();
                 log.appendToString("Timpul mediu de asteptare la casa " + entry.getKey().getID() + " a fost " + average);
-                //System.out.println("Timpul mediu de asteptare la casa " + entry.getKey().getID() + " a fost " + average);
             }
         }
 
@@ -175,29 +171,23 @@ public class EventListener implements IEL,Runnable {
                 int max = 0, max2 = 0;
                 if (!values.isEmpty()) {
                     for (Map.Entry<Integer, Integer> entry2 : values.entrySet()) {
-                        //ySystem.out.println(entry2.getKey()+" "+entry2.getValue());
                         max = entry2.getValue();
                         max2 = entry2.getKey();
 
                     }
                 }
-                //while(max%100!=0) max--;
                 max = max - max % 100;
                 log.appendToString(" La ora de varf " + max + " ms pentru casa " + entry.getKey().getID() + " au fost " + max2 + " clienti!");
-                //System.out.println(" La ora de varf " + max + " ms pentru casa " + entry.getKey().getID() + " au fost " + max2 + " clienti!");
-                //System.out.println("Ora de varf la casa "+entry.getKey()+" a fost la "+max+" ms!");
             }
         }
     }
 
     public void emptyQueueTimeDisplayer(Logger log)
     {
-        //checkMap();
         if(!emptyQueueTime.isEmpty()) {
             log.appendToString("\n");
             for (Map.Entry<Server, Integer> entry : emptyQueueTime.entrySet()) {
                 log.appendToString("Casa " + entry.getKey().getID() + " a fost goala timp de " + entry.getValue());
-                //System.out.println("Casa " + entry.getKey().getID() + " a fost goala timp de " + entry.getValue());
             }
         }
     }
@@ -209,18 +199,15 @@ public class EventListener implements IEL,Runnable {
     public void run() {
 
         long time=0;
-        long hourTime=0;
         this.startPeakHour(servers);
         while(true)
         {
             try{
 
                 time=System.currentTimeMillis();
-                //if((time-timeInit)<=)
                 Thread.sleep(0);
                 if((time-timeInit)%100==0)
                     this.notifyPeakHour((int)(time-timeInit));
-                //view.setProgressBars(realTimeClientCounter);
             }
             catch (InterruptedException e)
             {
