@@ -30,10 +30,10 @@ public class View extends JFrame {
         progressBars.add(casaProgressBar3);
         progressBars.add(casaProgressBar4);
         progressBars.add(casaProgressBar5);
-        for(JProgressBar bar:progressBars)
-        {
+        for(JProgressBar bar:progressBars) {
             bar.setStringPainted(true);
         }
+        this.initProgressBars();
     }
 
     public void setProgressBars(Map<Server,Integer> serverState)
@@ -48,6 +48,15 @@ public class View extends JFrame {
         }
         //this.setVisible(false);
         //this.setVisible(true);
+    }
+
+    public void initProgressBars()
+    {
+        for(int i=0;i<5;i++)
+        {
+            progressBars.get(i).setValue(0);
+            progressBars.get(i).setString("0 clienti");
+        }
     }
 
     public synchronized void setLogger(String s)
@@ -275,6 +284,7 @@ public class View extends JFrame {
                 int simulationTime=new Integer(simulationTimeField.getText());
                 if(simulationTime<=maxServiceTime || simulationTime<=maxTimeBetweenClients)
                     throw new NumberFormatException("Timpul de simulare dat este prea mic");
+                View.this.initProgressBars();
                 //IEL listener=new EventListener();
                 SimulationManager manager=new SimulationManager(minTimeBetweenClients,maxTimeBetweenClients,simulationTime,numberQueues,minServiceTime,maxServiceTime,View.this);
 

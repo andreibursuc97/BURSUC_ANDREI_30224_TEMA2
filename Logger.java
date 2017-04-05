@@ -46,21 +46,26 @@ public class Logger implements Runnable {
         int size=0;
         while(true)
         {
-                time=System.currentTimeMillis();
-                if((time-timeInit)<=simulationTime)
-                    view.setContorField((int)(time-timeInit));
-                if(text.toString().length()>size)
+            try {
+                time = System.currentTimeMillis();
+                if ((time - timeInit) <= simulationTime)
+                    view.setContorField((int) (time - timeInit));
+                if (text.toString().length() > size)
                     view.setLogger(text.toString());
-                size=text.toString().length();
+                size = text.toString().length();
                 view.setProgressBars(listen.getRealTimeClientCounter());
-                if(flag==1)
-                {listen.averageWaitingTimeDisplayer(this);
-                listen.emptyQueueTimeDisplayer(this);
-                listen.peakHourDisplayer(this);
-                flag=2;
-                }
-                else if(flag==2)
+                Thread.sleep(1);
+                if (flag == 1) {
+                    listen.averageWaitingTimeDisplayer(this);
+                    listen.emptyQueueTimeDisplayer(this);
+                    listen.peakHourDisplayer(this);
+                    flag = 2;
+                } else if (flag == 2)
                     break;
+            }catch(InterruptedException e)
+           {
+                break;
+            }
         }
     }
 }

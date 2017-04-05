@@ -205,9 +205,9 @@ public class EventListener implements IEL,Runnable {
             try{
 
                 time=System.currentTimeMillis();
-                Thread.sleep(0);
                 if((time-timeInit)%100==0)
                     this.notifyPeakHour((int)(time-timeInit));
+                Thread.sleep(1);
             }
             catch (InterruptedException e)
             {
