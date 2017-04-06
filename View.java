@@ -228,9 +228,12 @@ public class View extends JFrame {
 
         //======== scrollPane1 ========
         {
+
+            //---- loggerTextArea ----
+            loggerTextArea.setFont(new Font("Times New Roman", loggerTextArea.getFont().getStyle(), loggerTextArea.getFont().getSize() + 5));
             scrollPane1.setViewportView(loggerTextArea);
         }
-        contentPane.add(scrollPane1, "cell 3 12 5 1,width 100:370:500,height 100:159:300");
+        contentPane.add(scrollPane1, "cell 3 12 6 1,width 100:410:500,height 100:250:300");
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -282,6 +285,10 @@ public class View extends JFrame {
                 int numberQueues=new Integer(numberQueuesField.getText());
                 if(numberQueues<3 || numberQueues>5) throw new NumberFormatException("Numarul de cozi trebuie sa fie intre 3 si 5!");
                 int simulationTime=new Integer(simulationTimeField.getText());
+                if(maxTimeBetweenClients<minTimeBetweenClients)
+                    throw new NumberFormatException("Timpul maxim dintre clienti este mai mic decat cel minim!");
+                if(maxServiceTime<minServiceTime)
+                    throw new NumberFormatException("Timpul maxim de servire a unui client este mai mic decat timpul minim!");
                 if(simulationTime<=maxServiceTime || simulationTime<=maxTimeBetweenClients)
                     throw new NumberFormatException("Timpul de simulare dat este prea mic");
                 View.this.initProgressBars();

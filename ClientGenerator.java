@@ -6,7 +6,8 @@ import java.util.Random;
 
 /**
  * Created by Andrei on 25/03/2017.
- * Gestionare cozi.
+ * Acesasta clasa se ocupa practic de generarea continua a unui flux de clienti dea lungul simularii ca la final
+ * sa opreasca cozile din rulare.
  */
 public class ClientGenerator implements Runnable {
 

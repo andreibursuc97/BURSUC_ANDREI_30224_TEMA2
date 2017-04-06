@@ -4,6 +4,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Andrei on 01/04/2017.
+ * Urmareste evenimentele din threadurile de tip server si colecteaza informatiile pentru ca mai apoi sa le trimita la
+ * la logger care le afiseaza.
  */
 public class EventListener implements IEL,Runnable {
     private Map<Server,Integer> numberOfClients;
@@ -151,7 +153,7 @@ public class EventListener implements IEL,Runnable {
         if(!numberOfClients.isEmpty()) {
 
             checkMap();
-            log.appendToString("\n");
+            log.appendToString("");
             for (Map.Entry<Server, Integer> entry : numberOfClients.entrySet()) {
                 float time = totalWaitingTime.get(entry.getKey());
                 float average = time / entry.getValue();
@@ -164,7 +166,7 @@ public class EventListener implements IEL,Runnable {
     public void peakHourDisplayer(Logger log)
     {
         if(!peakHour.isEmpty()) {
-            log.appendToString("\n");
+            log.appendToString("");
             for (Map.Entry<Server, Map<Integer, Integer>> entry : peakHour.entrySet()) {
 
                 Map<Integer, Integer> values = entry.getValue();
@@ -185,7 +187,7 @@ public class EventListener implements IEL,Runnable {
     public void emptyQueueTimeDisplayer(Logger log)
     {
         if(!emptyQueueTime.isEmpty()) {
-            log.appendToString("\n");
+            log.appendToString("");
             for (Map.Entry<Server, Integer> entry : emptyQueueTime.entrySet()) {
                 log.appendToString("Casa " + entry.getKey().getID() + " a fost goala timp de " + entry.getValue());
             }

@@ -171,9 +171,10 @@ new FormModel {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTextArea" ) {
 					name: "loggerTextArea"
+					"font": new com.jformdesigner.model.SwingDerivedFont( "Times New Roman", 0, 5, false )
 				} )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 12 5 1,width 100:370:500,height 100:159:300"
+				"value": "cell 3 12 6 1,width 100:410:500,height 100:250:300"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 25, 70 )
