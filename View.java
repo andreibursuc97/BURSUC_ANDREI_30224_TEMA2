@@ -72,6 +72,7 @@ public class View extends JFrame {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Andrei Bursuc
+        label1 = new JLabel();
         minTimeBeetween = new JLabel();
         minTimeBeetweenField = new JTextField();
         minServiceTime = new JLabel();
@@ -131,100 +132,106 @@ public class View extends JFrame {
             "[]" +
             "[]" +
             "[]" +
+            "[]" +
             "[]"));
+
+        //---- label1 ----
+        label1.setText("Time is measured in miliseconds");
+        label1.setFont(new Font("Times New Roman", Font.BOLD, 12));
+        contentPane.add(label1, "cell 3 0");
 
         //---- minTimeBeetween ----
         minTimeBeetween.setText("Minimum Time Between clients");
-        contentPane.add(minTimeBeetween, "cell 3 0,gapy 10");
+        contentPane.add(minTimeBeetween, "cell 3 1,gapy 10");
 
         //---- minTimeBeetweenField ----
         minTimeBeetweenField.setText("Scrie aici...");
-        contentPane.add(minTimeBeetweenField, "cell 5 0,width 50:100");
+        contentPane.add(minTimeBeetweenField, "cell 5 1,width 50:100");
 
         //---- minServiceTime ----
         minServiceTime.setText("Minimum Service Time");
-        contentPane.add(minServiceTime, "cell 7 0,gapx 10");
+        contentPane.add(minServiceTime, "cell 7 1,gapx 10");
 
         //---- minServiceTimeField ----
         minServiceTimeField.setText("Scrie aici...");
-        contentPane.add(minServiceTimeField, "cell 8 0,width 50:100");
+        contentPane.add(minServiceTimeField, "cell 8 1,width 50:100");
 
         //---- maxTimeBetween ----
         maxTimeBetween.setText("Maximum Time Between clients");
-        contentPane.add(maxTimeBetween, "cell 3 1");
+        contentPane.add(maxTimeBetween, "cell 3 2");
 
         //---- maxTimeBetweenField ----
         maxTimeBetweenField.setText("Scrie aici...");
-        contentPane.add(maxTimeBetweenField, "cell 5 1");
+        contentPane.add(maxTimeBetweenField, "cell 5 2");
 
         //---- maxServiceTime ----
         maxServiceTime.setText("Maximum Service Time");
-        contentPane.add(maxServiceTime, "cell 7 1,gapx 10");
+        contentPane.add(maxServiceTime, "cell 7 2,gapx 10");
 
         //---- maxServiceTimeField ----
         maxServiceTimeField.setText("Scrie aici...");
-        contentPane.add(maxServiceTimeField, "cell 8 1");
+        contentPane.add(maxServiceTimeField, "cell 8 2");
 
         //---- numberQueues ----
         numberQueues.setText("Number of queues");
-        contentPane.add(numberQueues, "cell 3 2");
+        contentPane.add(numberQueues, "cell 3 3");
 
         //---- numberQueuesField ----
         numberQueuesField.setText("Scrie aici...");
-        contentPane.add(numberQueuesField, "cell 5 2");
+        contentPane.add(numberQueuesField, "cell 5 3");
 
         //---- simulationTime ----
         simulationTime.setText("Simulation Time");
-        contentPane.add(simulationTime, "cell 7 2,gapx 10");
+        contentPane.add(simulationTime, "cell 7 3,gapx 10");
 
         //---- simulationTimeField ----
         simulationTimeField.setText("Scrie aici...");
-        contentPane.add(simulationTimeField, "cell 8 2");
+        contentPane.add(simulationTimeField, "cell 8 3");
 
         //---- startButton ----
         startButton.setText("Start simulation");
-        contentPane.add(startButton, "cell 3 3,gapy 15");
+        contentPane.add(startButton, "cell 3 4,gapy 15");
 
         //---- label8 ----
         label8.setText("Situatia la case");
-        contentPane.add(label8, "cell 3 4");
+        contentPane.add(label8, "cell 3 5");
 
         //---- contorLabel ----
         contorLabel.setText("Conometru:");
-        contentPane.add(contorLabel, "cell 3 5");
+        contentPane.add(contorLabel, "cell 3 6");
 
         //---- contorField ----
         contorField.setText("Contor");
-        contentPane.add(contorField, "cell 3 5,alignx left,grow 0 100,width 50:100");
+        contentPane.add(contorField, "cell 3 6,alignx left,grow 0 100,width 50:100");
 
         //---- casa1 ----
         casa1.setText("Casa 1");
-        contentPane.add(casa1, "cell 3 6,gapy 10");
-        contentPane.add(casaProgressBar1, "cell 3 6,gapy 10");
+        contentPane.add(casa1, "cell 3 7,gapy 10");
+        contentPane.add(casaProgressBar1, "cell 3 7,gapy 10");
 
         //---- casa2 ----
         casa2.setText("Casa 2");
-        contentPane.add(casa2, "cell 3 7");
-        contentPane.add(casaProgressBar2, "cell 3 7");
+        contentPane.add(casa2, "cell 3 8");
+        contentPane.add(casaProgressBar2, "cell 3 8");
 
         //---- casa3 ----
         casa3.setText("Casa 3");
-        contentPane.add(casa3, "cell 3 8");
-        contentPane.add(casaProgressBar3, "cell 3 8");
+        contentPane.add(casa3, "cell 3 9");
+        contentPane.add(casaProgressBar3, "cell 3 9");
 
         //---- casa4 ----
         casa4.setText("Casa 4");
-        contentPane.add(casa4, "cell 3 9");
-        contentPane.add(casaProgressBar4, "cell 3 9");
+        contentPane.add(casa4, "cell 3 10");
+        contentPane.add(casaProgressBar4, "cell 3 10");
 
         //---- casa5 ----
         casa5.setText("Casa 5");
-        contentPane.add(casa5, "cell 3 10");
-        contentPane.add(casaProgressBar5, "cell 3 10");
+        contentPane.add(casa5, "cell 3 11");
+        contentPane.add(casaProgressBar5, "cell 3 11");
 
         //---- loggerLabel ----
         loggerLabel.setText("Logger");
-        contentPane.add(loggerLabel, "cell 3 11,gapy 30");
+        contentPane.add(loggerLabel, "cell 3 12,gapy 30");
 
         //======== scrollPane1 ========
         {
@@ -233,7 +240,7 @@ public class View extends JFrame {
             loggerTextArea.setFont(new Font("Times New Roman", loggerTextArea.getFont().getStyle(), loggerTextArea.getFont().getSize() + 5));
             scrollPane1.setViewportView(loggerTextArea);
         }
-        contentPane.add(scrollPane1, "cell 3 12 6 1,width 100:410:500,height 100:250:300");
+        contentPane.add(scrollPane1, "cell 3 13 6 1,width 100:410:500,height 100:250:300");
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -241,6 +248,7 @@ public class View extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Andrei Bursuc
+    private JLabel label1;
     private JLabel minTimeBeetween;
     private JTextField minTimeBeetweenField;
     private JLabel minServiceTime;

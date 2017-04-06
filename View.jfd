@@ -6,166 +6,173 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
 			"$layoutConstraints": "filly,hidemode 3,aligny top"
 			"$columnConstraints": "[fill][fill][fill][fill][fill][fill][fill][fill][fill][fill]"
-			"$rowConstraints": "[][][][][][][][][][][][][]"
+			"$rowConstraints": "[][][][][][][][][][][][][][]"
 		} ) {
 			name: "this"
 			"title": "Minimum Time Beetween clients"
 			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Time is measured in miliseconds"
+				"font": new java.awt.Font( "Times New Roman", 1, 12 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 3 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "minTimeBeetween"
 				"text": "Minimum Time Between clients"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 0,gapy 10"
+				"value": "cell 3 1,gapy 10"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "minTimeBeetweenField"
 				"text": "Scrie aici..."
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 5 0,width 50:100"
+				"value": "cell 5 1,width 50:100"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "minServiceTime"
 				"text": "Minimum Service Time"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 7 0,gapx 10"
+				"value": "cell 7 1,gapx 10"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "minServiceTimeField"
 				"text": "Scrie aici..."
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 8 0,width 50:100"
+				"value": "cell 8 1,width 50:100"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "maxTimeBetween"
 				"text": "Maximum Time Between clients"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 1"
+				"value": "cell 3 2"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "maxTimeBetweenField"
 				"text": "Scrie aici..."
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 5 1"
+				"value": "cell 5 2"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "maxServiceTime"
 				"text": "Maximum Service Time"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 7 1,gapx 10"
+				"value": "cell 7 2,gapx 10"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "maxServiceTimeField"
 				"text": "Scrie aici..."
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 8 1"
+				"value": "cell 8 2"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "numberQueues"
 				"text": "Number of queues"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 2"
+				"value": "cell 3 3"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "numberQueuesField"
 				"text": "Scrie aici..."
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 5 2"
+				"value": "cell 5 3"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "simulationTime"
 				"text": "Simulation Time"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 7 2,gapx 10"
+				"value": "cell 7 3,gapx 10"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "simulationTimeField"
 				"text": "Scrie aici..."
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 8 2"
+				"value": "cell 8 3"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "startButton"
 				"text": "Start simulation"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 3,gapy 15"
+				"value": "cell 3 4,gapy 15"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label8"
 				"text": "Situatia la case"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 4"
+				"value": "cell 3 5"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "contorLabel"
 				"text": "Conometru:"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 5"
+				"value": "cell 3 6"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "contorField"
 				"text": "Contor"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 5,alignx left,grow 0 100,width 50:100"
+				"value": "cell 3 6,alignx left,grow 0 100,width 50:100"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "casa1"
 				"text": "Casa 1"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 6,gapy 10"
+				"value": "cell 3 7,gapy 10"
 			} )
 			add( new FormComponent( "javax.swing.JProgressBar" ) {
 				name: "casaProgressBar1"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 6,gapy 10"
+				"value": "cell 3 7,gapy 10"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "casa2"
 				"text": "Casa 2"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 7"
+				"value": "cell 3 8"
 			} )
 			add( new FormComponent( "javax.swing.JProgressBar" ) {
 				name: "casaProgressBar2"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 7"
+				"value": "cell 3 8"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "casa3"
 				"text": "Casa 3"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 8"
+				"value": "cell 3 9"
 			} )
 			add( new FormComponent( "javax.swing.JProgressBar" ) {
 				name: "casaProgressBar3"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 8"
+				"value": "cell 3 9"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "casa4"
 				"text": "Casa 4"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 9"
+				"value": "cell 3 10"
 			} )
 			add( new FormComponent( "javax.swing.JProgressBar" ) {
 				name: "casaProgressBar4"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 9"
+				"value": "cell 3 10"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "casa5"
 				"text": "Casa 5"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 10"
+				"value": "cell 3 11"
 			} )
 			add( new FormComponent( "javax.swing.JProgressBar" ) {
 				name: "casaProgressBar5"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 10"
+				"value": "cell 3 11"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "loggerLabel"
 				"text": "Logger"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 11,gapy 30"
+				"value": "cell 3 12,gapy 30"
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
@@ -174,7 +181,7 @@ new FormModel {
 					"font": new com.jformdesigner.model.SwingDerivedFont( "Times New Roman", 0, 5, false )
 				} )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 12 6 1,width 100:410:500,height 100:250:300"
+				"value": "cell 3 13 6 1,width 100:410:500,height 100:250:300"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 25, 70 )
