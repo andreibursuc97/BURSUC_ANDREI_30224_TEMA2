@@ -124,7 +124,7 @@ public class EventListener implements IEL,Runnable {
 
     }
 
-    public void startPeakHour(List<Server> servers)
+    private void startPeakHour(List<Server> servers)
     {
         for(Server server:servers)
         {
